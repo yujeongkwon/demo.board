@@ -54,7 +54,7 @@
         <nav class="navbar" aria-label="Page navigation" style="text-align: center;">
             <ul class="pagination">
                 <th:block th:each="page:${#numbers.sequence(startPage,endPage)}">
-                    <a th:if="${page != nowPage}" th:href="@{/board/list(page=${page-1})}" th:test="${page}"></a>
+                    <a th:if="${page != nowPage}" th:href="@{/board/list(page=${page})}" th:text="${page}"></a>
                     <strong th:if="${page==nowPage}" th:text="${page}" style="color:red"></strong>
                 </th:block>
 <!--                th:with="startNumber=${T(Math).floor(boardList.number/10)} * 10 + 1,-->
