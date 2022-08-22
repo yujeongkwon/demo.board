@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/default">
 
-<head>
+<head th:replace="fragments/header :: header">
     <title>List</title>
 
     <!-- Page level plugin CSS-->
@@ -13,9 +13,8 @@
 
 <body>
 <!-- header를 작성하지 않아도 header가 이 위치에 구성된다. -->
-
+<div th:replace="fragments/script :: script" />
 <div class="container" layout:fragment="content">
-
     <div class="page-header">
         <h1>게시글 목록</h1>
     </div>
@@ -34,7 +33,6 @@
                     <th class="col-sm-1">No</th>
                     <th class="col-sm-5">제목</th>
                     <th class="col-sm-3">작성 날짜</th>
-                    <th class="col-sm-3">수정 날짜</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -44,9 +42,6 @@
                         <a th:href="'/board?idx='+${board.idx}" th:text="${board.title}"></a>
                     </td>
                     <td th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm:dd')}">
-                    </td>
-                    <td th:text="${#temporals.format(board.updatedDate, 'yyyy-MM-dd HH:mm:dd')}">
-                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -56,8 +51,7 @@
         <nav class="navbar" aria-label="Page navigation" style="text-align: center;">
             <ul class="pagination"
                 th:with="startNumber=${T(Math).floor(boardList.number/10)} * 10 + 1,
-                            endNumber=(${boardList.totalPages} > ${startNumber} + 9) ?
-                                        ${startNumber} + 9 : ${boardList.totalPages}">
+                            endNumber=${boardList.totalPages}">
 
                 <li th:style="${boardList.first} ? 'display:none'">
                     <a href="/board/list?page=1">&laquo;</a>

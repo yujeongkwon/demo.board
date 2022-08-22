@@ -3,14 +3,14 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/default">
 
-<head>
+<head th:replace="fragments/header :: header">
     <title>Form</title>
     <th:block layout:fragment="contentsCss">
     </th:block>
 </head>
 
 <body>
-
+<div th:replace="fragments/script :: script" />
 <div class="container" layout:fragment="content">
     <div class="page-header">
         <!--
