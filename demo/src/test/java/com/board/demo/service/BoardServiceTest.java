@@ -8,12 +8,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,6 +26,9 @@ class BoardServiceTest {
 
     @Autowired
     private BoardRepository boardRepository;
+
+    @Autowired
+    private BoardService boardService;
 
     @Autowired
     private UserRepository userRepository;
@@ -45,7 +50,9 @@ class BoardServiceTest {
         }
 
         Pageable pageable = PageRequest.of(0, 5);
-        System.out.println("boardRepository.findAll() = " + boardRepository.findAll(pageable));
+        Page<Board> pageBoard = boardService.findBoardList(pageable);
+        List<Board> board = pageBoard.getContent();
+        System.out.println("boardRepository.findAll() = " + board);
     }
 
     @Test

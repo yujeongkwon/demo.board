@@ -5,6 +5,7 @@ import com.board.demo.domain.Board;
 import com.board.demo.repository.BoardRepository;
 import com.board.demo.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -39,7 +40,14 @@ public class BoardController {
      */
     @GetMapping("/list")
     public String list(@PageableDefault Pageable pageable, Model model) {
-        model.addAttribute("boardList", boardService.findBoardList(pageable));
+        Page<Board> list = boardService.findBoardList(pageable);
+        int nowPage = list.getPageable().getPageNumber() +1;
+        int startPage = Math.max(nowPage-4,1);
+        int endPage = Math.min(nowPage+5,list.getTotalPages());
+        model.addAttribute("boardList", list);
+        model.addAttribute("nowPage",nowPage);
+        model.addAttribute("startPage",startPage);
+        model.addAttribute("endPage",endPage);
         return "board/list";
     }
 
@@ -68,7 +76,7 @@ public class BoardController {
      */
     @PutMapping("/{idx}")
     public ResponseEntity<?> putBoard(@PathVariable("idx") Long idx, @RequestBody Board board) {
-        Board updateBoard = boardRepository.getOne(idx);
+        Board updateBoard = boardRepository.getReferenceById(idx);
         updateBoard.setTitle(board.getTitle());
         updateBoard.setContent(board.getContent());
         boardRepository.save(updateBoard);
