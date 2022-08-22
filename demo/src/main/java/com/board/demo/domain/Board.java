@@ -19,7 +19,7 @@ public class Board {
     // 글쓴이 - 게시판 1 : N (주인 = 게시판)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private String user; //글쓴이
+    private User user; //글쓴이
 
     @Column
     private String title;
@@ -33,7 +33,7 @@ public class Board {
     @Builder
     public Board(Long idx,User user, String title, String content, LocalDateTime createdDate) {
         this.idx = idx;
-        this.user = user.getUsername();
+        this.user = user;
         this.title = title;
         this.content = content;
         this.createdDate = createdDate;
