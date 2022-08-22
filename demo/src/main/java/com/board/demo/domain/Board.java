@@ -2,6 +2,7 @@ package com.board.demo.domain;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor  //기본생성자 @Builder은 jap 애너테이션 = 생성자 필요
 public class Board {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "board_idx")
