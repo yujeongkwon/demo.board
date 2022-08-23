@@ -23,7 +23,7 @@ public class DemoApplication {
 
 		@Bean
 		public CommandLineRunner runner(BoardRepository boardRepository, UserRepository userRepository) throws Exception {
-			// 100개의 예시 게시글 생성
+			// 100개의 임시 사용자, 게시글 생성
 			return args ->
 					IntStream.rangeClosed(1, 94).forEach(i -> {
 						User user =  User.builder()
